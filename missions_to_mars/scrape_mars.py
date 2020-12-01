@@ -1,0 +1,113 @@
+from bs4 import BeautifulSoup as bs
+import requests
+import pandas as pd
+from splinter import Browser
+from webdriver_manager.chrome import ChromeDriverManager
+
+mars_data = {}
+
+def scrape():
+    # ------------------------------------------------- #
+    # MARS NEWS
+    # ------------------------------------------------- #
+
+    # NASA Mars News
+    response = requests.get('https://mars.nasa.gov/news/')
+    res = response.text
+
+    # Set up BeautifulSoup object and print to check
+    soup = bs(res, 'html.parser')
+
+    # Get the news title and print to make sure it's correct
+    news_title = soup.select('div.content_title')[0].text.strip()
+
+    # Get the news paragraph, print to make sure it's correct
+    news_para = soup.select('div.rollover_description_inner')[1].text.strip()
+
+    # ---- #
+    # ADD TO DICTIONARY #
+    # ---- #
+
+    mars_data['News Title'] = news_title
+    mars_data['News Paragraph'] = news_para
+
+    # Setup splinter
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=False)
+
+    # Set URL and open browser
+    url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
+    browser.visit(url)
+
+    # Get HTML and parse with BeautifulSoup, print to check
+    html = browser.html
+    soup_jpl = bs(html, 'html.parser')
+
+    # Find Featured Image URL and print to check
+    featured_img = soup_jpl.find_all(name='a', class_='button fancybox')[0].get('data-fancybox-href')
+
+    # Visit URL for full-size image
+    browser.visit(f'https://www.jpl.nasa.gov{featured_img}')
+
+    # ---- #
+    # ADD TO DICTIONARY #
+    # ---- #
+    mars_data["JPL Img"] = f'https://www.jpl.nasa.gov{featured_img}'
+
+    # Close Browser
+    browser.quit()
+
+    # ------------------------------------------------- #
+    # MARS FACTS
+    # ------------------------------------------------- #
+
+    # # Set URL and Visit
+    # mars_facts_url = 'https://space-facts.com/mars/'
+    # mars_df = pd.read_html(mars_facts_url)[0]
+
+    # # Export as HTML and save in variable, print to make sure it looks good
+    # mars_df_html = mars_df.to_html(classes="table")
+
+    # # ------------------------------------------------- #
+    # # MARS HEMISPHERES
+    # # ------------------------------------------------- #
+
+    # # Start Splinter Again, since we closed the last browser
+    # executable_path = {'executable_path': ChromeDriverManager().install()}
+    # browser = Browser('chrome', **executable_path, headless=False)
+
+    # # Visit the USGS Astrogeology Site 
+    # usgs_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    # browser.visit(usgs_url)
+
+    # # Set HTML for Parsing, then parse with BeautifulSoup
+    # usgs_html = browser.html
+    # usgs_soup = bs(usgs_html, 'html.parser')
+
+    # # Loop through Links and get info, create dictionary, and append dictionary to list, go back to the first page
+
+    # links = usgs_soup.select('a.product-item')
+
+    # hemisphere_image_urls = []
+
+    # for link in links:
+    #     if link.text != '':
+    #         try:
+    #             browser.links.find_by_partial_text(f'{link.text}').click()
+    #             new_page_html = browser.html
+    #             new_page_soup = bs(new_page_html, 'html.parser')
+    #             img_url = new_page_soup.select('li a')[0].get('href')
+    #             img_dict = {}
+    #             img_dict["title"] = link.text
+    #             img_dict["url"] = img_url
+    #             hemisphere_image_urls.append(img_dict)
+    #             browser.visit(usgs_url)
+    #         except:
+    #             print('Link text not found.')
+
+    # browser.quit()
+
+
+    return print(mars_data)
+
+scrape()
