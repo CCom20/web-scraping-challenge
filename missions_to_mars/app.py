@@ -13,7 +13,7 @@ mongo = PyMongo(app)
 
 @app.route('/')
 def index():
-    mars_db = mongo.db.mars_db.find_one()
+    mars_db = mongo.db.items.find_one()
     print(mars_db)
 
     # Return the template with the teams list passed in
@@ -22,7 +22,7 @@ def index():
 # Set route
 @app.route('/scrape')
 def scraper():
-    mars_db = mongo.db.mars_db
+    mars_db = mongo.db.items
     mars_data = scrape_mars.scrape()
     mars_db.update({}, mars_data, upsert=True)
     return redirect("/", code=302)

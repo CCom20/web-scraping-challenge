@@ -44,8 +44,8 @@ def scrape():
     # ADD TO DICTIONARY #
     # ---- #
 
-    mars_data['News Title'] = news_title
-    mars_data['News Paragraph'] = news_para
+    mars_data['news_title'] = news_title
+    mars_data['news_para'] = news_para
 
     # Setup splinter
     executable_path = {'executable_path': ChromeDriverManager().install()}
