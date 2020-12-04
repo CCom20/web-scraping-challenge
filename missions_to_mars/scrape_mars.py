@@ -12,12 +12,6 @@ client = pymongo.MongoClient(conn)
 # Recreate DB without Duplicates
 mars_db = client.mars_db
 
-# Drops collection if available to remove duplicates
-mars_db.items.drop()
-
-# Create Collection again
-collection = mars_db.items
-
 # Create Mars_Data Python Dictionary
 mars_data = {}
 
@@ -66,7 +60,7 @@ def scrape():
     browser.visit(f'https://www.jpl.nasa.gov{featured_img}')
 
     # ADD TO DICTIONARY #
-    mars_data["JPL Img"] = f'https://www.jpl.nasa.gov{featured_img}'
+    mars_data["jpl_img"] = f'https://www.jpl.nasa.gov{featured_img}'
 
     # Close Browser
     browser.quit()
@@ -83,7 +77,7 @@ def scrape():
     mars_df_html = mars_df.to_html(classes="table")
 
     # ADD TO DICTIONARY #
-    mars_data["Mars Facts"] = mars_df_html
+    mars_data["mars_facts"] = mars_df_html
 
     # # ------------------------------------------------- #
     # # MARS HEMISPHERES
@@ -126,10 +120,6 @@ def scrape():
 
     # ADD TO DICTIONARY #
 
-    mars_data["Mars Hemispheres"] = hemisphere_image_urls
-
-    # ADD TO MONGO #
-
-    collection.insert_one(mars_data)
+    mars_data["mars_hemispheres"] = hemisphere_image_urls
 
     return mars_data
