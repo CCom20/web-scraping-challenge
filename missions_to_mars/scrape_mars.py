@@ -21,18 +21,25 @@ def scrape():
     # MARS NEWS
     # ------------------------------------------------- #
 
-    # NASA Mars News
-    response = requests.get('https://mars.nasa.gov/news/')
-    res = response.text
+    # Get response from website
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=False)
+
+    mars_news = 'https://mars.nasa.gov/news/'
+
+    browser.visit(mars_news)
+
+    # Set up the text variable 'mars_news_html' 
+    mars_news_html = browser.html
 
     # Set up BeautifulSoup object and print to check
-    soup = bs(res, 'html.parser')
+    soup = bs(mars_news_html, 'html.parser')
 
     # Get the news title and print to make sure it's correct
-    news_title = soup.select('div.content_title')[0].text.strip()
+    news_title = soup.select('div.content_title a')[0].text.strip()
 
     # Get the news paragraph, print to make sure it's correct
-    news_para = soup.select('div.rollover_description_inner')[1].text.strip()
+    news_para = soup.select('div.article_teaser_body')[1].text.strip()
 
     # ---- #
     # ADD TO DICTIONARY #
