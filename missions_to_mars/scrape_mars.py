@@ -65,9 +65,6 @@ def scrape():
     # ADD TO DICTIONARY #
     mars_data["jpl_img"] = f'https://www.jpl.nasa.gov{featured_img}'
 
-    # Close Browser
-    browser.quit()
-
     # ------------------------------------------------- #
     # MARS FACTS
     # ------------------------------------------------- #
@@ -85,10 +82,6 @@ def scrape():
     # # ------------------------------------------------- #
     # # MARS HEMISPHERES
     # # ------------------------------------------------- #
-
-    # Start Splinter Again, since we closed the last browser
-    executable_path = {'executable_path': ChromeDriverManager().install()}
-    browser = Browser('chrome', **executable_path, headless=False)
 
     # Visit the USGS Astrogeology Site 
     usgs_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
