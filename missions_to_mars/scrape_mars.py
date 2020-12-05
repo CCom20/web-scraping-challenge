@@ -48,10 +48,6 @@ def scrape():
     mars_data['news_title'] = news_title
     mars_data['news_para'] = news_para
 
-    # Setup splinter
-    executable_path = {'executable_path': ChromeDriverManager().install()}
-    browser = Browser('chrome', **executable_path, headless=False)
-
     # Set URL and open browser
     url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(url)
