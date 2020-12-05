@@ -42,19 +42,43 @@
           {{mars.mars_facts | safe}}
         </table>
       <h2>Mars Images</h2>
-      <ul>
-        <li>{{mars.mars_hemispheres[0]['title']}}</li>
-        <li>{{mars.mars_hemispheres[1]['title']}}</li>
-        <li>{{mars.mars_hemispheres[2]['title']}}</li>
-        <li>{{mars.mars_hemispheres[3]['title']}}</li>
-      </ul>
-      
-      
-      {{mars}}
-    </div>
-    <div>
+      <div class="row" style="margin: 20px 0px 20px 0px">
+        <div class="col">
+          <div class="card text-white">
+            <img src="{{mars.mars_hemispheres[0]['url']}}" class="card-img">
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{mars.mars_hemispheres[0]['title']}}</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card text-white">
+            <img src="{{mars.mars_hemispheres[1]['url']}}" class="card-img">
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{mars.mars_hemispheres[1]['title']}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin: 20px 0px 10px 0px">
+        <div class="col">
+          <div class="card bg-dark text-white">
+            <img src="{{mars.mars_hemispheres[2]['url']}}" class="card-img">
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{mars.mars_hemispheres[2]['title']}}</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card bg-dark text-white">
+            <img src="{{mars.mars_hemispheres[3]['url']}}" class="card-img">
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{mars.mars_hemispheres[3]['title']}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </body>
-
 </html>
