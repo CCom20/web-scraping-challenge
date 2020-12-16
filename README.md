@@ -1,6 +1,8 @@
 # Web Scraper: NASA / Mars Data
 This project scrapes data from various websites. While some of this could be done using `requests` package in python, `splinter` is the main tool since some web pages were missing elements when `requests` was used. 
 
+![GitHub language count](https://img.shields.io/github/languages/count/CCom20/web-scraping-challenge?style=for-the-badge)
+
 ## NASA Mars News Scraper
 This brief code vitis https://mars.nasa.gov/news/ and gets the latest data. When using `requests`, only July 2020 and eariler articles were returned. Speaking with my peers about why this happens, it was mention `splinter` should be used instead. 
 
